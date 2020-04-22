@@ -85,7 +85,7 @@ function Restaurant({restaurant,addRestaurant,id,loading,updateRes}){
                             resolve(newData);
                         }  
                     })
-                }}  
+                }}   
             
                 components={{
                     EditField: (props) => {
