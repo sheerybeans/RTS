@@ -27,13 +27,14 @@ export const addRestaurant = (id, postData)=>dispatch=>new Promise((resolve,reje
       resolve(postData)
     })
 })
-export const updateRestaurant = (id,newData,oldData)=>dispatch=>new Promise((resolve,reject)=>{
+export const updateRestaurant = (id,newData,oldData) => dispatch => new Promise((resolve,reject)=>{
     axios.patch('http://localhost:4000/store/restaurantupdate/'+id,newData)
-    .then(function (response) {
+    .then(function () {
        dispatch({
            type:"UPDATE_RESTAURANT",
            payload:newData
        })
         resolve(newData);
     })
+    
 });

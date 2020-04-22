@@ -21,11 +21,18 @@ const useStyles = makeStyles((theme) => ({
   const validate = values => {
     const errors = {}
     const requiredFields = [
-      'company'
+      'company',
+      'owner',
+      'phone',
+      'email',
+      'address',
+      'city',
+      'province',
+      'postal'
     ]
     requiredFields.forEach(field => {
       if (!values[field]) {
-        errors[field] = 'Required'
+        errors[field] = 'This field is required'
       }
     })
     if (
