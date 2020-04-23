@@ -3,29 +3,28 @@ import {connect} from 'react-redux';
 import Table from '../common/Table.jsx';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import {addRestaurant,updateRestaurant} from '../actions/rtsAction';
 function Restaurant({restaurant,addRestaurant,id,loading,updateRes}){
     const columnData=[
         {
-            "title": "Enroll Location",
-            "field": "enroll_location",
+            title: "Enroll Location",
+            field: "enroll_location",
             initialEditValue:false,
             render: rowData => (
             <h4>{rowData.enroll_location?"enrolled":"not enrolled"}</h4>
             ),
-            // editComponent: rowData => (
-            //     <input 
-            //         type="checkbox" 
-            //         defaultValue={rowData.value}
-            //         defaultChecked={rowData.rowData.enroll_location}
-            //         onChange={e => rowData.onChange(!rowData.value)}
-            //     />
-            // ) 
+            editComponent: rowData => (
+                <input 
+                    type="checkbox" 
+                    defaultValue={rowData.value}
+                    defaultChecked={rowData.rowData.enroll_location}
+                    onChange={e => rowData.onChange(!rowData.value)}
+                />
+            ) 
         },
-        {"title":"Store Number","field":"store_number","required":true},
-        {"title":"Street Address","field":"address",
-        "required":true,
+        {title:"Store Number",field:"store_number","required":true},
+        {title:"Street Address",field:"address",
+        required:true,
             // editComponent:rowData=>(
             //     <TextField
             //         required={true}
@@ -35,40 +34,43 @@ function Restaurant({restaurant,addRestaurant,id,loading,updateRes}){
             //     />
             // ),
         },
-        {"title":"City","field":"city","required":true},
-        {"title":"Province","field":"province","required":true},
-        {"title":"Postal","field":"postal","required":true},
+        {title:"City",field:"city",required:true},
+        {title:"Province",field:"province",required:true},
+        {title:"Postal",field:"postal",required:true},
         {
-            "title": "Hours",
-            "field": "hours",
-            "lookup": { 24: "24Hours", 12: "12Hours" },
+            title: "24hours?",
+            field: "hours",
+            lookup: { 24: "24Hours", 12: "12Hours" },
         },
         {
-            "title": "Select Hours",
-            "field": "select_hours",
-            "lookup": { 1: "test1", 2: "test2" },
+            title: "Select Hours",
+            field: "select_hours",
+            lookup: { 1: "test1", 2: "test2" },
         },
-        {"title":"Site Email","field":"site_email"},
-        {"title":"Site Phone","field":"site_phone"},
-        {"title":"Franchisee Phone","field":"franchise_phone"},
-        {"title":"Franchise Email","field":"franchise_email"}
+        {title:"Site Email",field:"site_email"},
+        {title:"Site Phone",field:"site_phone"},
+        {title:"Franchisee Phone",field:"franchise_phone"},
+        {title:"franchisee Email",field:"franchise_email"}
         
     ]
     return(
         <Container maxWidth="xl">
             <Table
             // updateRes(id,newData, oldData)
-                title="Restaurant List"
+                title={(<h1>RESTAURANT TABLE</h1>)}
                 isLoading={loading}
                 options={{
-                    exportButton: true
+                    exportButton: true,
+                    addRowPosition:'first',
+                    toolbarButtonAlignment:'left',
+                    
                 }}
                 data={restaurant}
                 columns={columnData}
                 editable={{
                     onRowAdd: newData => new Promise((resolve,reject)=>{
                         const {store_number,address,city,province,postal} = newData;
-                        if(!store_number && !address && !city && !province && !postal){
+                        if(typeof store_number==="undefined" || typeof address ==="undefined" || typeof city ==="undefined" || typeof province==="undefined" || typeof postal ==="undefined"){
                             reject(newData);
                         }else{
                             addRestaurant(id,newData);
@@ -76,15 +78,16 @@ function Restaurant({restaurant,addRestaurant,id,loading,updateRes}){
                         }  
                         
                     }),
-                    onRowUpdate: (newData,oldData) => new Promise((resolve,reject)=>{
-                        const {store_number,address,city,province,postal} = newData;
-                        if(store_number!==null && address!==null && city!==null && province!==null && postal!==null){
-                            reject(newData);
-                        }else{
-                            updateRes(id,newData, oldData)
-                            resolve(newData);
-                        }  
-                    })
+                    // onRowUpdate: (newData,oldData) =>  new Promise((resolve,reject)=>{
+                    //     const {store_number,address,city,province,postal} = newData;
+                    //     if(store_number!=="" && address!=="" && city!=="" && province!=="" && postal!==""){
+                    //         updateRes(id,newData, oldData)
+                    //         resolve()
+                    //     }else{
+                    //         reject(newData)
+                    //     }  
+                    // })
+                    onRowUpdate:(newData,oldData)=>updateRes(id,newData, oldData)
                 }}   
             
                 components={{
@@ -93,11 +96,11 @@ function Restaurant({restaurant,addRestaurant,id,loading,updateRes}){
                             return <TextField error defaultValue={{...props}} onChange={(e)=>props.onChange(e.target.value)}/>
                         }else{
                             if(props.columnDef.required && typeof props.value === "undefined"){
-                                return <TextField error defaultValue="" onChange={(e)=>props.onChange(e.target.value)}/>  
+                                return <TextField autoFocus error defaultValue="" onChange={(e)=>props.onChange(e.target.value)}/>  
                             }
                         }
-                        console.log(props)
-                        return <TextField defaultValue={props.value} onChange={(e)=>props.onChange(e.target.value)}/>
+                        // console.log(props)
+                        return <TextField autoFocus defaultValue={props.value} onChange={(e)=>props.onChange(e.target.value)}/>
                     }
                 }}
             //     components={{

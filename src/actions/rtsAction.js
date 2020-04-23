@@ -15,9 +15,10 @@ export const getRts =(id)=>{
     }
 } 
 export const addRestaurant = (id, postData)=>dispatch=>new Promise((resolve,reject)=>{
-    postData.site_phone = parseInt(postData.site_phone);
-    postData.store_number = parseInt(postData.store_number);
-    postData.franchise_phone = parseInt(postData.franchise_phone);
+    console.log('?*****************************************************************************************',postData)
+    // postData.site_phone = parseInt(postData.site_phone);
+    // postData.store_number = parseInt(postData.store_number);
+    // postData.franchise_phone = parseInt(postData.franchise_phone);
     axios.post('http://localhost:4000/store/restaurantadd/'+id, postData)
     .then(response => {
       dispatch({
@@ -27,14 +28,27 @@ export const addRestaurant = (id, postData)=>dispatch=>new Promise((resolve,reje
       resolve(postData)
     })
 })
-export const updateRestaurant = (id,newData,oldData) => dispatch => new Promise((resolve,reject)=>{
-    axios.patch('http://localhost:4000/store/restaurantupdate/'+id,newData)
-    .then(function () {
-       dispatch({
-           type:"UPDATE_RESTAURANT",
-           payload:newData
-       })
-        resolve(newData);
-    })
+// export const updateRestaurant = (id,newData,oldData) => dispatch => new Promise((resolve,reject)=>{
+//     axios.patch('http://localhost:4000/store/restaurantupdate/'+id,newData)
+//     .then(function () {
+//        dispatch({
+//            type:"UPDATE_RESTAURANT",
+//            payload:newData
+//        })
+//         resolve(newData);
+//     })
     
-});
+// });
+export const updateRestaurant =(id,newData,oldData)=>{
+    
+    // return dispatch=>{
+    //     return axios.patch('http://localhost:4000/store/restaurantupdate/'+id,newData)
+    //     .then(function(response){
+    //         dispatch({
+    //             type:"UPDATE_RESTAURANT",
+    //             payload:newData
+    //         })
+    //     });
+        
+    // }
+}

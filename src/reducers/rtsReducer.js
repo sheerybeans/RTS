@@ -62,7 +62,7 @@ function rtsReducer(state=initialState,action){
         default:return state
       }
 }
-export const load = data => ({ type: 'GET_USER_DATA_SUCCESS', data })
+
 export default combineReducers({
     rtsReducer,
     form: formReducer

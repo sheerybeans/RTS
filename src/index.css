@@ -51,3 +51,6 @@ code {
 .MuiFormHelperText-contained{
   margin: 0px !important;
 }
+.MuiSvgIcon-root{
+  font-size: 2rem;
+}
